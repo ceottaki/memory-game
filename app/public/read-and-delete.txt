@@ -1,0 +1,3 @@
+Add files that should be served statically to this folder, for example, images.
+For example, an image added directly to this folder called image.png can be accessed by going to /image.png.
+I suggest folders are used to organise this folder, i.e. /images/image.png.

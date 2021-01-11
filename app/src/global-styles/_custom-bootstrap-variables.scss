@@ -1,0 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Define custom variables here.                                                                 //
+//                                                                                               //
+// Variables with !default should be the same as Bootstrap's and only be here because they are   //
+// used by other variables.                                                                      //
+//                                                                                               //
+// Variables that are different than the default in Bootstrap should not have the !default flag. //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Just examples:
+$primary: #19bc9c;
+$secondary: #ed7164;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// These are here so that this file alone can be imported into SCSS modules to make Bootstrap    //
+// variables, functions and mixins available to the modules.                                     //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/mixins';
