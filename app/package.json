@@ -6,7 +6,7 @@
   "browser": "out/index.html",
   "scripts": {
     "dev": "next",
-    "build": "next build && next export",
+    "build": "cross-env NEXT_EXPORT=true next build && cross-env NEXT_EXPORT=true next export",
     "start": "next start",
     "lint": "tslint ./src/**/*.{ts,tsx} -t verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,7 @@
     "@types/node": "13.13.2",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
+    "cross-env": "7.0.3",
     "tslint": "6.1.1",
     "tslint-react": "5.0.0",
     "typescript": "3.9.4"
@@ -28,6 +29,7 @@
     "bootstrap": "4.5.3",
     "lazysizes": "5.2.2",
     "next": "10.0.5",
+    "next-offline": "5.0.3",
     "react": "17.0.1",
     "react-bootstrap": "1.4.0",
     "react-dom": "17.0.1",
