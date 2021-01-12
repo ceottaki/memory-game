@@ -1,12 +1,11 @@
 import { NextPage } from 'next'
 
+import Board from '../components/Board/Board'
 import MainLayout from '../components/MainLayout/MainLayout'
-import Avatar from '../components/Account/Avatar'
 
 const Home: NextPage = () => (
   <MainLayout>
-    <h3 className='text-center'>Hello, world.</h3>
-    <Avatar />
+    <Board height={6} width={6} />
   </MainLayout>
 )
 
