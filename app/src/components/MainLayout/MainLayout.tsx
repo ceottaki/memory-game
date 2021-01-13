@@ -24,7 +24,7 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
       <Head>
         <title>{metaTitle || `${pageTitle || ''} | ${siteTitle || ''}`}</title>
       </Head>
-      <Header siteLogo='https://via.placeholder.com/90' />
+      <Header />
       <main className={styles.mainContent}>
         <Container fluid={true}>{children}</Container>
       </main>

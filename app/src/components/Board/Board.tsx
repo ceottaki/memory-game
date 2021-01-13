@@ -153,7 +153,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   return (
     <Container>
-      <Row className='pb-3'>
+      <Row className='pb-1 pb-md-3'>
         <Col>
           <Button variant={started ? 'secondary' : 'primary'} onClick={toggleGameState}>
             {started ? 'End' : 'Start'}
@@ -178,7 +178,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         ? rowsArray.map((r) => (
             <Row key={r}>
               {colsArray.map((c) => (
-                <Col key={c} className='pb-3'>
+                <Col key={c} className='pb-1 pb-md-3'>
                   <Card
                     card={cards[r * (height + 1) + c]}
                     onClick={openCard(r * (height + 1) + c)}
