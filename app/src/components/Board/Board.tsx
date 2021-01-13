@@ -6,6 +6,7 @@ import styles from './Board.module.scss'
 import Card from '../Card/Card'
 import { ICard } from '../../common-types/ICard'
 import RunningTime from './RunningTime'
+import ScoreBoard from './ScoreBoard'
 import { Utils } from '../../services/utils'
 
 interface IBoardProps {
@@ -153,15 +154,12 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   return (
     <Container>
-      <Row className='pb-1 pb-md-3'>
-        <Col>
-          <Button variant={started ? 'secondary' : 'primary'} onClick={toggleGameState}>
-            {started ? 'End' : 'Start'}
-          </Button>
-        </Col>
-        <Col>{started ? `Pairs flipped: ${pairsFlipped}.` : null}</Col>
-        <Col>{started && startTime ? <RunningTime startTime={startTime} /> : null}</Col>
-      </Row>
+      <ScoreBoard
+        started={started}
+        onToggleGameState={toggleGameState}
+        pairsFlipped={pairsFlipped}
+        startTime={startTime}
+      />
 
       {won && lastRunningTime ? (
         <Row>
