@@ -45,7 +45,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
           newMatchValue = Utils.randint(1, totalTypeCards)
         }
 
-        newCards.push({ matchValue: newMatchValue, isOpen: true })
+        newCards.push({ matchValue: newMatchValue, isOpen: true, isMatched: false })
       }
 
       setState((s) => ({ ...s, cards: newCards, acceptingInput: false }))
@@ -77,10 +77,25 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
       setState((s) => {
         const numCardsOpened = s.cards.filter((c) => c.isOpen).length
-        // If trying to close the current card when it's the only one open...
-        if (s.cards[cardIndex].isOpen && numCardsOpened === 1) {
-          // ...don't do anything.
-          return s
+        // If there's only one card opened...
+        if (numCardsOpened === 1) {
+          if (s.cards[cardIndex].isOpen) {
+            // ...and trying to close the current card, don't do anything.
+            return s
+          }
+
+          if (
+            s.cards[cardIndex].matchValue === (s.cards.find((c) => c.isOpen) as ICard).matchValue
+          ) {
+            // ...and the card about to be opened matches the card already opened, matches them.
+            const matchedNewCards: ICard[] = [...s.cards].map((card) => ({
+              ...card,
+              isOpen: false,
+              isMatched: card.isMatched || card.matchValue === s.cards[cardIndex].matchValue
+            }))
+
+            return { ...s, cards: matchedNewCards }
+          }
         }
 
         // Closes all cards if more than one is already opened.
