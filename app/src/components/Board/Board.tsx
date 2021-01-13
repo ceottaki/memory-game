@@ -16,6 +16,7 @@ interface IBoardProps {
 interface IBoardState {
   started: boolean
   startTime?: Date
+  pairsFlipped: number
   cards: ICard[]
   acceptingInput: boolean
 }
@@ -24,11 +25,14 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   const defaultState: IBoardState = {
     started: false,
     startTime: undefined,
+    pairsFlipped: 0,
     cards: [],
     acceptingInput: false
   }
 
-  const [{ started, startTime, cards, acceptingInput }, setState] = useState(defaultState)
+  const [{ started, startTime, pairsFlipped, cards, acceptingInput }, setState] = useState(
+    defaultState
+  )
 
   useEffect(() => {
     if (started) {
@@ -77,12 +81,16 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
       setState((s) => {
         const numCardsOpened = s.cards.filter((c) => c.isOpen).length
+        let newPairsFlipped = s.pairsFlipped
+
         // If there's only one card opened...
         if (numCardsOpened === 1) {
           if (s.cards[cardIndex].isOpen) {
             // ...and trying to close the current card, don't do anything.
             return s
           }
+
+          newPairsFlipped++
 
           if (
             s.cards[cardIndex].matchValue === (s.cards.find((c) => c.isOpen) as ICard).matchValue
@@ -94,7 +102,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
               isMatched: card.isMatched || card.matchValue === s.cards[cardIndex].matchValue
             }))
 
-            return { ...s, cards: matchedNewCards }
+            return { ...s, cards: matchedNewCards, pairsFlipped: newPairsFlipped }
           }
         }
 
@@ -105,7 +113,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
         // Flips the card in question.
         newCards[cardIndex].isOpen = !newCards[cardIndex].isOpen
-        return { ...s, cards: newCards }
+        return { ...s, cards: newCards, pairsFlipped: newPairsFlipped }
       })
     }
   }
@@ -121,6 +129,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
             {started ? 'End' : 'Start'}
           </Button>
         </Col>
+        <Col>Pairs flipped: {pairsFlipped}.</Col>
         <Col>{started && startTime ? <RunningTime startTime={startTime} /> : null}</Col>
       </Row>
 
