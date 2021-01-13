@@ -22,7 +22,9 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
     >
       <div className={`${styles.cardWithBorder} ${card.isOpen ? styles.openedCard : ''}`}>
         <div className={styles.cardBack} />
-        <div className={styles.cardFront}>{card.matchValue}</div>
+        <div className={`${styles.cardFront} d-flex align-items-center justify-content-center`}>
+          {card.matchValue}
+        </div>
       </div>
     </button>
   )

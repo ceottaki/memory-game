@@ -17,16 +17,18 @@ interface IBoardState {
   started: boolean
   startTime?: Date
   cards: ICard[]
+  acceptingInput: boolean
 }
 
 export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   const defaultState: IBoardState = {
     started: false,
     startTime: undefined,
-    cards: []
+    cards: [],
+    acceptingInput: false
   }
 
-  const [{ started, startTime, cards }, setState] = useState(defaultState)
+  const [{ started, startTime, cards, acceptingInput }, setState] = useState(defaultState)
 
   useEffect(() => {
     if (started) {
@@ -43,12 +45,19 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
           newMatchValue = Utils.randint(1, totalTypeCards)
         }
 
-        newCards.push({ matchValue: newMatchValue, isOpen: false })
+        newCards.push({ matchValue: newMatchValue, isOpen: true })
       }
 
-      setState((s) => ({ ...s, cards: newCards }))
+      setState((s) => ({ ...s, cards: newCards, acceptingInput: false }))
+      setTimeout(() => {
+        setState((s) => {
+          const closedCards = [...s.cards].map((card) => ({ ...card, isOpen: false }))
+          return { ...s, cards: closedCards, acceptingInput: true }
+        })
+      }, 2500)
     } else if (startTime) {
       // Display score
+      setState((s) => ({ ...s, acceptingInput: false }))
     }
   }, [started])
 
@@ -62,6 +71,10 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   const openCard = (cardIndex: number) => {
     return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (!acceptingInput) {
+        return
+      }
+
       setState((s) => {
         const numCardsOpened = s.cards.filter((c) => c.isOpen).length
         // If trying to close the current card when it's the only one open...
