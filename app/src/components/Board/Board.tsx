@@ -43,7 +43,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
           newMatchValue = Utils.randint(1, totalTypeCards)
         }
 
-        newCards.push({ matchValue: newMatchValue })
+        newCards.push({ matchValue: newMatchValue, isOpen: false })
       }
 
       setState((s) => ({ ...s, cards: newCards }))
@@ -60,12 +60,34 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
     }))
   }
 
+  const openCard = (cardIndex: number) => {
+    return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      setState((s) => {
+        const numCardsOpened = s.cards.filter((c) => c.isOpen).length
+        // If trying to close the current card when it's the only one open...
+        if (s.cards[cardIndex].isOpen && numCardsOpened === 1) {
+          // ...don't do anything.
+          return s
+        }
+
+        // Closes all cards if more than one is already opened.
+        const newCards: ICard[] = [...s.cards].map((card) =>
+          numCardsOpened > 1 ? { ...card, isOpen: false } : card
+        )
+
+        // Flips the card in question.
+        newCards[cardIndex].isOpen = !newCards[cardIndex].isOpen
+        return { ...s, cards: newCards }
+      })
+    }
+  }
+
   const rowsArray = Array.from(Array(height), (x, index) => index)
   const colsArray = Array.from(Array(width), (x, index) => index)
 
   return (
     <Container>
-      <Row>
+      <Row className='pb-3'>
         <Col>
           <Button variant={started ? 'secondary' : 'primary'} onClick={toggleGameState}>
             {started ? 'End' : 'Start'}
@@ -78,8 +100,11 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         ? rowsArray.map((r) => (
             <Row key={r}>
               {colsArray.map((c) => (
-                <Col key={c}>
-                  <Card card={cards[r * height + c]} />
+                <Col key={c} className='pb-3'>
+                  <Card
+                    card={cards[r * (height + 1) + c]}
+                    onClick={openCard(r * (height + 1) + c)}
+                  />
                 </Col>
               ))}
             </Row>

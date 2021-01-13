@@ -1,0 +1,48 @@
+.perspectiveContainer {
+  display: block;
+  perspective: 160px;
+  padding-top: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  position: relative;
+  width: 100%;
+
+  & .openedCard {
+    transform: rotateY(180deg);
+  }
+}
+
+.cardWithBorder {
+  transition: transform 0.5s;
+  box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transform-style: preserve-3d;
+}
+
+.cardBack {
+  background-image: url('./images/CardBack.svg');
+  background-size: cover;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.cardFront {
+  backface-visibility: hidden;
+  height: 100%;
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

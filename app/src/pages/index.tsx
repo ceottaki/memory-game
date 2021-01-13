@@ -5,7 +5,7 @@ import MainLayout from '../components/MainLayout/MainLayout'
 
 const Home: NextPage = () => (
   <MainLayout>
-    <Board height={6} width={6} />
+    <Board height={4} width={5} />
   </MainLayout>
 )
 
