@@ -19,20 +19,33 @@ interface IBoardState {
   pairsFlipped: number
   cards: ICard[]
   acceptingInput: boolean
+  won: boolean
+  lastPairsFlipped?: number
+  lastRunningTime?: Date
 }
 
 export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   const defaultState: IBoardState = {
     started: false,
-    startTime: undefined,
     pairsFlipped: 0,
     cards: [],
-    acceptingInput: false
+    acceptingInput: false,
+    won: false
   }
 
-  const [{ started, startTime, pairsFlipped, cards, acceptingInput }, setState] = useState(
-    defaultState
-  )
+  const [
+    {
+      started,
+      startTime,
+      pairsFlipped,
+      cards,
+      acceptingInput,
+      won,
+      lastPairsFlipped,
+      lastRunningTime
+    },
+    setState
+  ] = useState(defaultState)
 
   useEffect(() => {
     if (started) {
@@ -52,7 +65,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         newCards.push({ matchValue: newMatchValue, isOpen: true, isMatched: false })
       }
 
-      setState((s) => ({ ...s, cards: newCards, acceptingInput: false }))
+      setState((s) => ({ ...s, cards: newCards, acceptingInput: false, pairsFlipped: 0 }))
       setTimeout(() => {
         setState((s) => {
           const closedCards = [...s.cards].map((card) => ({ ...card, isOpen: false }))
@@ -65,11 +78,23 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
     }
   }, [started])
 
+  useEffect(() => {
+    if (won) {
+      setState((s) => ({
+        ...s,
+        started: false,
+        lastPairsFlipped: s.pairsFlipped,
+        lastRunningTime: new Date(Number(new Date()) - Number(s.startTime))
+      }))
+    }
+  }, [won])
+
   const toggleGameState = () => {
     setState((s) => ({
       ...s,
       started: !s.started,
-      startTime: s.started ? s.startTime : new Date()
+      startTime: s.started ? s.startTime : new Date(),
+      won: false
     }))
   }
 
@@ -102,7 +127,12 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
               isMatched: card.isMatched || card.matchValue === s.cards[cardIndex].matchValue
             }))
 
-            return { ...s, cards: matchedNewCards, pairsFlipped: newPairsFlipped }
+            return {
+              ...s,
+              cards: matchedNewCards,
+              pairsFlipped: newPairsFlipped,
+              won: s.won || !matchedNewCards.find((c) => !c.isMatched)
+            }
           }
         }
 
@@ -129,9 +159,20 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
             {started ? 'End' : 'Start'}
           </Button>
         </Col>
-        <Col>Pairs flipped: {pairsFlipped}.</Col>
+        <Col>{started ? `Pairs flipped: ${pairsFlipped}.` : null}</Col>
         <Col>{started && startTime ? <RunningTime startTime={startTime} /> : null}</Col>
       </Row>
+
+      {won && lastRunningTime ? (
+        <Row>
+          <Col>YOU WON!</Col>
+          <Col>Pairs flipped: {lastPairsFlipped}.</Col>
+          <Col>
+            Elapsed time: {lastRunningTime.getUTCHours()}h {lastRunningTime.getUTCMinutes()}m{' '}
+            {lastRunningTime.getUTCSeconds()}s.
+          </Col>
+        </Row>
+      ) : null}
 
       {cards && cards.length
         ? rowsArray.map((r) => (

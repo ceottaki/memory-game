@@ -29,7 +29,7 @@ export const RunningTime: React.FC<IRunningTimeProps> = ({ startTime }) => {
 
   return (
     <div>
-      {runningTime.getUTCHours()}:{runningTime.getUTCMinutes()}:{runningTime.getUTCSeconds()}
+      {runningTime.getUTCHours()}h {runningTime.getUTCMinutes()}m {runningTime.getUTCSeconds()}s
     </div>
   )
 }
