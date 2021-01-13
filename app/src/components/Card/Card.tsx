@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 import styles from './Card.module.scss'
 
@@ -9,10 +10,6 @@ interface ICardProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-interface ICardState {
-  opened: boolean
-}
-
 export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
   return (
     <button
@@ -20,10 +17,14 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
       className={`${styles.perspectiveContainer} btn btn-link`}
       onClick={onClick}
     >
-      <div className={`${styles.cardWithBorder} ${card.isOpen ? styles.openedCard : ''}`}>
+      <div
+        className={`${styles.cardWithBorder} ${
+          card.isOpen || card.isMatched ? styles.openedCard : ''
+        }`}
+      >
         <div className={styles.cardBack} />
         <div className={`${styles.cardFront} d-flex align-items-center justify-content-center`}>
-          {card.matchValue}
+          <Image layout='fill' src={`/images/cards/${card.matchValue}.png`} alt='Card' />
         </div>
       </div>
     </button>
