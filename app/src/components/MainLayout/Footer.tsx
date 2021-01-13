@@ -2,15 +2,15 @@ import React from 'react'
 
 import styles from './Footer.module.scss'
 
-interface IFooterProps {
-  siteLogo: string
-}
-
-export const Footer: React.FC<IFooterProps> = ({ siteLogo }) => {
+export const Footer: React.FC = () => {
   return (
     <div className={styles.footer}>
-      <img data-src={siteLogo} loading='lazy' />
-      Footer Here
+      Built with <img src='/images/love.svg' width='24' height='24' />
+      <br />
+      &copy; {new Date().getUTCFullYear()}{' '}
+      <a target='_blank' href='https://github.com/ceottaki'>
+        Felipe Ceotto
+      </a>
     </div>
   )
 }

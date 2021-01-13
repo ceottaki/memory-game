@@ -28,7 +28,7 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
       <main className={styles.mainContent}>
         <Container fluid={true}>{children}</Container>
       </main>
-      <Footer siteLogo='https://via.placeholder.com/90' />
+      <Footer />
     </>
   )
 }
