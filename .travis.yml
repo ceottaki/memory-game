@@ -4,6 +4,9 @@ node_js:
 cache:
   directories:
     - app/node_modules # Cache the node_modules folder for quicker build times
+install:
+  - cd app
+  - npm install
 script:
   - cd app
   - npm run build # Runs next build
