@@ -2,6 +2,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
+  "liveServer.settings.root": "/app/out",
   "prettier.arrowParens": "always",
   "prettier.endOfLine": "lf",
   "prettier.printWidth": 100,
@@ -13,9 +14,5 @@
   "html.format.endWithNewline": true,
   "cSpell.language": "en-GB",
   "tslint.ignoreDefinitionFiles": false,
-  "cSpell.words": [
-    "lazyload",
-    "lazysizes",
-    "mixins"
-  ]
+  "cSpell.words": ["lazyload", "lazysizes", "mixins"]
 }
