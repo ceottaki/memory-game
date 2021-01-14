@@ -26,7 +26,7 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
   useEffect(() => {
     const isProd = process.env.NODE_ENV === 'production'
     if (isProd) {
-      register(`${basePath}/service-worker.js`, { scope: basePath })
+      register(`${basePath}/service-worker.js`, { scope: `${basePath}/` })
     }
 
     return () => {
