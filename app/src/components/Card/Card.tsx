@@ -1,5 +1,6 @@
-import React from 'react'
+import { useRouter } from 'next/router'
 // import Image from 'next/image'
+import React from 'react'
 
 import styles from './Card.module.scss'
 
@@ -11,6 +12,8 @@ interface ICardProps {
 }
 
 export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
+  const { basePath } = useRouter()
+
   return (
     <button
       type='button'
@@ -27,7 +30,7 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
           <div className={styles.cardFrontImageContainer}>
             <img
               alt='Card'
-              src={`/images/cards/${card.matchValue}.png`}
+              src={`${basePath}/images/cards/${card.matchValue}.png`}
               decoding='async'
               className={styles.cardFrontImage}
               sizes='100vw'

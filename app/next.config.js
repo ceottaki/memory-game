@@ -1,6 +1,10 @@
 const withOffline = require('next-offline')
 
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
+  basePath: isProd ? '/memory-game' : '',
+  assetPrefix: isProd ? '/memory-game/' : '',
   // generateInDevMode: true,
   workboxOpts: {
     swDest: process.env.NEXT_EXPORT ? 'service-worker.js' : 'static/service-worker.js',
