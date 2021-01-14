@@ -51,3 +51,32 @@
   bottom: 0;
   right: 0;
 }
+
+.cardFrontImageContainer {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.cardFrontImage {
+  visibility: inherit;
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  margin: auto;
+  display: block;
+  width: 0px;
+  height: 0px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}

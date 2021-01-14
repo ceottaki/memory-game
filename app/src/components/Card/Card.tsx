@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 import styles from './Card.module.scss'
 
@@ -24,7 +24,16 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
       >
         <div className={styles.cardBack} />
         <div className={`${styles.cardFront} d-flex align-items-center justify-content-center`}>
-          <Image layout='fill' src={`/images/cards/${card.matchValue}.png`} alt='Card' />
+          <div className={styles.cardFrontImageContainer}>
+            <img
+              alt='Card'
+              src={`/images/cards/${card.matchValue}.png`}
+              decoding='async'
+              className={styles.cardFrontImage}
+              sizes='100vw'
+            />
+          </div>
+          {/* <Image layout='fill' src={`/images/cards/${card.matchValue}.png`} alt='Card' /> */}
         </div>
       </div>
     </button>
