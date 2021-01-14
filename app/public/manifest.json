@@ -38,6 +38,12 @@
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0"
+    },
+    {
+      "src": "/memory-game/images/icons/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "density": "10.0"
     }
   ],
   "theme_color": "#ffffff",
