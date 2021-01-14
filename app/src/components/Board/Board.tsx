@@ -47,7 +47,11 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   const defaultState: IBoardState = {
     started: false,
     pairsFlipped: 0,
-    cards: generateCards(true),
+    cards: Array.from(Array(width * height), (x, index) => ({
+      matchValue: Math.floor(index / 2) + 1,
+      isOpen: false,
+      isMatched: false
+    })),
     acceptingInput: false,
     won: false
   }
