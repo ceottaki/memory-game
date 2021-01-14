@@ -160,7 +160,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   const rowsArray = Array.from(Array(height), (x, index) => index)
   const colsArray = Array.from(Array(width), (x, index) => index)
-  const topBoardRef = useRef()
+  const topBoardRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className='container'>
