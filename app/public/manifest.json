@@ -1,7 +1,7 @@
 {
-  "name": "memory-game",
-  "short_name": "memory-game",
-  "description": "A web-based memory game.",
+  "name": "Memory Game",
+  "short_name": "Memory",
+  "description": "A simple memory game where you should match cards to win.",
   "icons": [
     {
       "src": "/images/pwa.png",
