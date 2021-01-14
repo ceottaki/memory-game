@@ -19,7 +19,7 @@ const ScoreBoard: React.FC<IScoreBoardProps> = ({
   startTime
 }) => {
   return (
-    <Row className={`pb-1 pb-md-3 ${className}`}>
+    <Row className={`pb-1 pb-md-3 ${className || ''}`}>
       <Col>
         <Button variant={started ? 'secondary' : 'primary'} onClick={onToggleGameState}>
           {started ? 'End' : 'Start'}

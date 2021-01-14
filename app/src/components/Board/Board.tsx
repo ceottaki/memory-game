@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Col, Row } from 'react-bootstrap'
+import React, { useRef, useEffect, useState } from 'react'
+import { Col, Row } from 'react-bootstrap'
 
 import styles from './Board.module.scss'
 
 import Card from '../Card/Card'
 import { ICard } from '../../common-types/ICard'
-import RunningTime from './RunningTime'
 import ScoreBoard from './ScoreBoard'
 import { Utils } from '../../services/utils'
 
@@ -26,10 +25,29 @@ interface IBoardState {
 }
 
 export const Board: React.FC<IBoardProps> = ({ height, width }) => {
+  const generateCards = (allClosed: boolean = false) => {
+    const totalCards = height * width
+    const totalTypeCards = Math.floor(totalCards / 2)
+    const newCards: ICard[] = []
+    for (let i = 0; i < totalCards; i++) {
+      let newMatchValue: number | undefined
+      while (
+        !newMatchValue ||
+        newCards.filter((c) => c.matchValue === newMatchValue).length === 2
+      ) {
+        newMatchValue = Utils.randint(1, totalTypeCards)
+      }
+
+      newCards.push({ matchValue: newMatchValue, isOpen: !allClosed, isMatched: false })
+    }
+
+    return newCards
+  }
+
   const defaultState: IBoardState = {
     started: false,
     pairsFlipped: 0,
-    cards: [],
+    cards: generateCards(true),
     acceptingInput: false,
     won: false
   }
@@ -51,20 +69,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   useEffect(() => {
     if (started) {
       // Generate cards
-      const totalCards = height * width
-      const totalTypeCards = Math.floor(totalCards / 2)
-      const newCards: ICard[] = []
-      for (let i = 0; i < totalCards; i++) {
-        let newMatchValue: number | undefined
-        while (
-          !newMatchValue ||
-          newCards.filter((c) => c.matchValue === newMatchValue).length === 2
-        ) {
-          newMatchValue = Utils.randint(1, totalTypeCards)
-        }
-
-        newCards.push({ matchValue: newMatchValue, isOpen: true, isMatched: false })
-      }
+      const newCards: ICard[] = generateCards()
 
       setState((s) => ({ ...s, cards: newCards, acceptingInput: false, pairsFlipped: 0 }))
       setTimeout(() => {
@@ -73,6 +78,10 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
           return { ...s, cards: closedCards, acceptingInput: true }
         })
       }, 2500)
+
+      if (topBoardRef && topBoardRef.current) {
+        topBoardRef.current.scrollIntoView(true)
+      }
     } else if (startTime) {
       // Display score
       setState((s) => ({ ...s, acceptingInput: false }))
@@ -151,9 +160,10 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   const rowsArray = Array.from(Array(height), (x, index) => index)
   const colsArray = Array.from(Array(width), (x, index) => index)
+  const topBoardRef = useRef()
 
   return (
-    <Container>
+    <div className='container'>
       <ScoreBoard
         started={started}
         onToggleGameState={toggleGameState}
@@ -172,11 +182,13 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         </Row>
       ) : null}
 
-      {cards && cards.length
-        ? rowsArray.map((r) => (
+      {cards && cards.length ? (
+        <div ref={topBoardRef}>
+          {' '}
+          {rowsArray.map((r) => (
             <Row key={r}>
               {colsArray.map((c) => (
-                <Col key={c} className='pb-1 pb-md-3'>
+                <Col key={c} className='pb-1 pb-md-2 pb-lg-3'>
                   <Card
                     card={cards[r * (height + 1) + c]}
                     onClick={openCard(r * (height + 1) + c)}
@@ -184,9 +196,10 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
                 </Col>
               ))}
             </Row>
-          ))
-        : null}
-    </Container>
+          ))}
+        </div>
+      ) : null}
+    </div>
   )
 }
 
