@@ -40,6 +40,13 @@
       "density": "4.0"
     },
     {
+      "src": "/memory-game/images/icons/maskable-icon-256x256",
+      "sizes": "256x256",
+      "type": "image/png",
+      "density": "5.0",
+      "purpose": "any maskable"
+    }
+    {
       "src": "/memory-game/images/icons/android-icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
