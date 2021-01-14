@@ -6,6 +6,7 @@ const nextConfig = {
   basePath: isProd ? '/memory-game' : '',
   assetPrefix: isProd ? '/memory-game/' : '',
   // generateInDevMode: true,
+  dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: process.env.NEXT_EXPORT ? 'service-worker.js' : 'static/service-worker.js',
     maximumFileSizeToCacheInBytes: 10485760, // Caches files of up to 10MB.
