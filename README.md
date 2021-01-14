@@ -23,7 +23,9 @@ These are currently on our roadmap:
 
 - Keep the past best score for comparison
 - Build better visuals for winning the game
+- Add sounds
 - Allow the game to be paused, hiding the cards and pausing the timer
+- Internationalisation
 
 If you have any suggestions you would like implemented, please get in touch using the [Issues tab](https://github.com/ceottaki/memory-game/issues).
 
