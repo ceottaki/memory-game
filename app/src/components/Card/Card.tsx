@@ -14,7 +14,7 @@ interface ICardProps {
 export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
   const { basePath } = useRouter()
 
-  return (
+  return card ? (
     <button
       type='button'
       className={`${styles.perspectiveContainer} btn btn-link`}
@@ -40,7 +40,7 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
         </div>
       </div>
     </button>
-  )
+  ) : null
 }
 
 export default Card

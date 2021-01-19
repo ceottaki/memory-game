@@ -193,10 +193,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
             <Row key={r}>
               {colsArray.map((c) => (
                 <Col key={c} className='pb-1 pb-md-2 pb-lg-3'>
-                  <Card
-                    card={cards[r * (height + 1) + c]}
-                    onClick={openCard(r * (height + 1) + c)}
-                  />
+                  <Card card={cards[r * width + c]} onClick={openCard(r * width + c)} />
                 </Col>
               ))}
             </Row>
