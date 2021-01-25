@@ -1,16 +1,8 @@
 .perspectiveContainer {
   display: block;
   perspective: 160px;
-  padding-top: 75%;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 0;
-  position: relative;
+  height: 100%;
   width: 100%;
-
-  @media screen and (min-height: 510px) {
-    padding-top: 100%;
-  }
 
   & .openedCard {
     transform: rotateY(180deg);
@@ -30,8 +22,10 @@
 
 .cardBack {
   background-image: url('./images/CardBack.svg');
-  background-size: cover;
+  background-size: contain;
+  background-position-x: 50%;
   background-position-y: 50%;
+  background-repeat: no-repeat;
   height: 100%;
   backface-visibility: hidden;
   position: absolute;

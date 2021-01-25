@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Button, Col } from 'react-bootstrap'
 
 import styles from './Board.module.scss'
 
 import Card from '../Card/Card'
 import { ICard } from '../../common-types/ICard'
+import RunningTime from './RunningTime'
 import ScoreBoard from './ScoreBoard'
 import { Utils } from '../../services/utils'
 
@@ -22,6 +23,11 @@ interface IBoardState {
   won: boolean
   lastPairsFlipped?: number
   lastRunningTime?: Date
+  highScores: {
+    pairsFlipped: number
+    runningTime: Date
+    timestamp: Date
+  }[]
 }
 
 export const Board: React.FC<IBoardProps> = ({ height, width }) => {
@@ -53,7 +59,8 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
       isMatched: false
     })),
     acceptingInput: false,
-    won: false
+    won: false,
+    highScores: []
   }
 
   const [
@@ -65,10 +72,28 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
       acceptingInput,
       won,
       lastPairsFlipped,
-      lastRunningTime
+      lastRunningTime,
+      highScores
     },
     setState
   ] = useState(defaultState)
+
+  useEffect(() => {
+    const localHighScores = (JSON.parse(localStorage.getItem('highScores') || '[]') || []) as {
+      pairsFlipped: number
+      runningTime: Date
+      timestamp: Date
+    }[]
+
+    setState((s) => ({
+      ...s,
+      highScores: localHighScores.map((h) => ({
+        ...h,
+        runningTime: new Date(h.runningTime),
+        timestamp: new Date(h.timestamp)
+      }))
+    }))
+  }, [])
 
   useEffect(() => {
     if (started) {
@@ -83,9 +108,9 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         })
       }, 2500)
 
-      if (topBoardRef && topBoardRef.current) {
-        topBoardRef.current.scrollIntoView(true)
-      }
+      // if (topBoardRef && topBoardRef.current) {
+      //   topBoardRef.current.scrollIntoView(true)
+      // }
     } else if (startTime) {
       // Display score
       setState((s) => ({ ...s, acceptingInput: false }))
@@ -94,14 +119,30 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   useEffect(() => {
     if (won) {
+      const newHighScores = [
+        ...highScores,
+        {
+          pairsFlipped,
+          runningTime: new Date(Number(new Date()) - Number(startTime)),
+          timestamp: new Date()
+        }
+      ]
+
+      newHighScores.sort((a, b) => Number(a.runningTime) - Number(b.runningTime))
+
       setState((s) => ({
         ...s,
         started: false,
         lastPairsFlipped: s.pairsFlipped,
-        lastRunningTime: new Date(Number(new Date()) - Number(s.startTime))
+        lastRunningTime: new Date(Number(new Date()) - Number(s.startTime)),
+        highScores: newHighScores.slice(0, 10)
       }))
     }
   }, [won])
+
+  useEffect(() => {
+    localStorage.setItem('highScores', JSON.stringify(highScores))
+  }, [highScores])
 
   const toggleGameState = () => {
     setState((s) => ({
@@ -169,35 +210,47 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
   return (
     <div className='container'>
       <ScoreBoard
+        showModal={!started || (won && !!lastRunningTime)}
         started={started}
         onToggleGameState={toggleGameState}
         pairsFlipped={pairsFlipped}
         startTime={startTime}
+        highScores={highScores}
+        winningCondition={
+          won
+            ? {
+                lastPairsFlipped: lastPairsFlipped || 0,
+                lastRunningTime: lastRunningTime || new Date(0)
+              }
+            : undefined
+        }
       />
 
-      {won && lastRunningTime ? (
-        <Row>
-          <Col>YOU WON!</Col>
-          <Col>Pairs flipped: {lastPairsFlipped}.</Col>
-          <Col>
-            Elapsed time: {lastRunningTime.getUTCHours()}h {lastRunningTime.getUTCMinutes()}m{' '}
-            {lastRunningTime.getUTCSeconds()}s.
-          </Col>
-        </Row>
+      {cards && cards.length ? (
+        <div ref={topBoardRef} className={styles.cardsContainer}>
+          {rowsArray.map((r) => (
+            <div key={r} className={styles.cardRow} style={{ height: `${100 / height}%` }}>
+              {colsArray.map((c) => (
+                <div key={c} className={styles.cardCol} style={{ width: `${100 / width}%` }}>
+                  <Card card={cards[r * width + c]} onClick={openCard(r * width + c)} />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       ) : null}
 
-      {cards && cards.length ? (
-        <div ref={topBoardRef}>
-          {' '}
-          {rowsArray.map((r) => (
-            <Row key={r}>
-              {colsArray.map((c) => (
-                <Col key={c} className='pb-1 pb-md-2 pb-lg-3'>
-                  <Card card={cards[r * width + c]} onClick={openCard(r * width + c)} />
-                </Col>
-              ))}
-            </Row>
-          ))}
+      {started ? (
+        <div className={styles.currentScore}>
+          <Col>Pairs: {pairsFlipped}</Col>
+          <Col className='d-flex justify-content-center'>
+            {startTime ? <RunningTime startTime={startTime} /> : null}
+          </Col>
+          <Col className='d-flex justify-content-end'>
+            <Button variant='secondary' onClick={toggleGameState} size='sm'>
+              End
+            </Button>
+          </Col>
         </div>
       ) : null}
     </div>

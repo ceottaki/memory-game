@@ -121,11 +121,11 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
         />
         <meta name='theme-color' content='#ffffff' />
       </Head>
-      <Header />
+      {/* <Header /> */}
       <main className={styles.mainContent}>
         <Container fluid={true}>{children}</Container>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

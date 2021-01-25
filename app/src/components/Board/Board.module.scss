@@ -1,0 +1,25 @@
+.cardsContainer {
+  position: fixed;
+  bottom: 2.95rem;
+  left: 15px;
+  right: 15px;
+  top: 15px;
+}
+
+.cardRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardCol {
+  padding: 0;
+}
+
+.currentScore {
+  position: fixed;
+  bottom: 5px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: row;
+}

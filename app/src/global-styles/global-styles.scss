@@ -1,2 +1,19 @@
 @import './custom-bootstrap-variables';
 @import '../../node_modules/bootstrap/scss/bootstrap';
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    max-height: 100vh;
+    float: left;
+    width: 100vw;
+    overflow: hidden;
+  }
+}

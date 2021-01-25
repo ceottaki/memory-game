@@ -7,8 +7,4 @@
 .mainContent {
   background-color: $white;
   padding-top: 0.5rem;
-
-  @include media-breakpoint-up(md) {
-    padding-top: 2rem;
-  }
 }

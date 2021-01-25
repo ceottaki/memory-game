@@ -5,6 +5,10 @@
 @import '../../global-styles/custom-bootstrap-variables';
 
 .footer {
-  padding-top: 2rem;
+  padding-top: 1rem;
   text-align: center;
+  left: 0px;
+  right: 0px;
+  position: fixed;
+  bottom: 15px;
 }
