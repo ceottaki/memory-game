@@ -53,6 +53,7 @@ jobs:
         with:
           node-version: '18'
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: ${{ env.app_folder }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
         # with:
@@ -78,7 +79,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./${{ env.app_folder }}out
 
   # Deployment job
   deploy:
