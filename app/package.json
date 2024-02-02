@@ -47,6 +47,7 @@
     "react": "18.2.0",
     "react-bootstrap": "2.10.0",
     "react-dom": "18.2.0",
-    "sass": "1.70.0"
+    "sass": "1.70.0",
+    "workbox-window": "7.0.0"
   }
 }

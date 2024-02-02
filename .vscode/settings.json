@@ -18,5 +18,5 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "cSpell.language": "en-GB",
-  "cSpell.words": ["lazyload", "lazysizes", "mixins"]
+  "cSpell.words": ["lazyload", "lazysizes", "mixins", "Workbox"]
 }
