@@ -1,13 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { Button, Col } from 'react-bootstrap'
 
 import styles from './Board.module.scss'
-
-import Card from '../Card/Card'
-import { ICard } from '../../common-types/ICard'
 import RunningTime from './RunningTime'
 import ScoreBoard from './ScoreBoard'
+import { ICard } from '../../common-types/ICard'
 import { Utils } from '../../services/utils'
+import Card from '../Card/Card'
 
 interface IBoardProps {
   height: number
@@ -144,14 +143,14 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
     localStorage.setItem('highScores', JSON.stringify(highScores))
   }, [highScores])
 
-  const toggleGameState = () => {
+  const toggleGameState = useCallback(() => {
     setState((s) => ({
       ...s,
       started: !s.started,
       startTime: s.started ? s.startTime : new Date(),
       won: false
     }))
-  }
+  }, [])
 
   const openCard = (cardIndex: number) => {
     return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

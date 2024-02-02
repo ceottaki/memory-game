@@ -3,13 +3,12 @@ import React from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 
 import styles from './ScoreBoard.module.scss'
-
 import { Utils } from '../../services/utils'
 
 interface IScoreBoardProps {
   showModal: boolean
   started: boolean
-  onToggleGameState: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  onToggleGameState: () => void
   pairsFlipped: number
   startTime?: Date
   highScores: {
@@ -86,7 +85,7 @@ const ScoreBoard: React.FC<IScoreBoardProps> = ({
           Built with <img src={`${basePath}/images/love.svg`} width='24' height='24' />
           <br />
           &copy; {new Date().getUTCFullYear()}{' '}
-          <a target='_blank' href='https://github.com/ceottaki'>
+          <a target='_blank' href='https://github.com/ceottaki' rel='noreferrer'>
             Felipe Ceotto
           </a>
         </div>

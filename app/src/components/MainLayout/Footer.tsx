@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
       Built with <img src={`${basePath}/images/love.svg`} width='24' height='24' />
       <br />
       &copy; {new Date().getUTCFullYear()}{' '}
-      <a target='_blank' href='https://github.com/ceottaki'>
+      <a target='_blank' href='https://github.com/ceottaki' rel='noreferrer'>
         Felipe Ceotto
       </a>
     </div>

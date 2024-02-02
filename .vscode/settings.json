@@ -1,18 +1,22 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
+  "liveServer.settings.NoBrowser": true,
   "liveServer.settings.root": "/app/out",
+  "liveServer.settings.mount": [["/memory-game", "/app/out"]],
   "prettier.arrowParens": "always",
   "prettier.endOfLine": "lf",
+  "prettier.prettierPath": "./app/node_modules/prettier",
   "prettier.printWidth": 100,
   "prettier.semi": false,
   "prettier.singleQuote": true,
   "prettier.tabWidth": 2,
   "files.eol": "\n",
   "files.insertFinalNewline": true,
-  "html.format.endWithNewline": true,
   "cSpell.language": "en-GB",
-  "tslint.ignoreDefinitionFiles": false,
   "cSpell.words": ["lazyload", "lazysizes", "mixins"]
 }

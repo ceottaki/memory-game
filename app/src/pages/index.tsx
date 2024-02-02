@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
+import React, { useEffect, useState } from 'react'
 
 import Board from '../components/Board/Board'
 import MainLayout from '../components/MainLayout/MainLayout'
