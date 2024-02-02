@@ -1,13 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
 import { Button, Col } from 'react-bootstrap'
 
 import styles from './Board.module.scss'
-
-import Card from '../Card/Card'
-import { ICard } from '../../common-types/ICard'
 import RunningTime from './RunningTime'
 import ScoreBoard from './ScoreBoard'
+import { ICard } from '../../common-types/ICard'
 import { Utils } from '../../services/utils'
+import Card from '../Card/Card'
 
 interface IBoardProps {
   height: number
@@ -31,24 +30,27 @@ interface IBoardState {
 }
 
 export const Board: React.FC<IBoardProps> = ({ height, width }) => {
-  const generateCards = (allClosed: boolean = false) => {
-    const totalCards = height * width
-    const totalTypeCards = Math.floor(totalCards / 2)
-    const newCards: ICard[] = []
-    for (let i = 0; i < totalCards; i++) {
-      let newMatchValue: number | undefined
-      while (
-        !newMatchValue ||
-        newCards.filter((c) => c.matchValue === newMatchValue).length === 2
-      ) {
-        newMatchValue = Utils.randint(1, totalTypeCards)
+  const generateCards = useCallback(
+    (allClosed: boolean = false) => {
+      const totalCards = height * width
+      const totalTypeCards = Math.floor(totalCards / 2)
+      const newCards: ICard[] = []
+      for (let i = 0; i < totalCards; i++) {
+        let newMatchValue: number | undefined
+        while (
+          !newMatchValue ||
+          newCards.filter((c) => c.matchValue === newMatchValue).length === 2
+        ) {
+          newMatchValue = Utils.randint(1, totalTypeCards)
+        }
+
+        newCards.push({ matchValue: newMatchValue, isOpen: !allClosed, isMatched: false })
       }
 
-      newCards.push({ matchValue: newMatchValue, isOpen: !allClosed, isMatched: false })
-    }
-
-    return newCards
-  }
+      return newCards
+    },
+    [height, width]
+  )
 
   const defaultState: IBoardState = {
     started: false,
@@ -115,7 +117,7 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
       // Display score
       setState((s) => ({ ...s, acceptingInput: false }))
     }
-  }, [started])
+  }, [generateCards, startTime, started])
 
   useEffect(() => {
     if (won) {
@@ -138,23 +140,23 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         highScores: newHighScores.slice(0, 10)
       }))
     }
-  }, [won])
+  }, [highScores, pairsFlipped, startTime, won])
 
   useEffect(() => {
     localStorage.setItem('highScores', JSON.stringify(highScores))
   }, [highScores])
 
-  const toggleGameState = () => {
+  const toggleGameState = useCallback(() => {
     setState((s) => ({
       ...s,
       started: !s.started,
       startTime: s.started ? s.startTime : new Date(),
       won: false
     }))
-  }
+  }, [])
 
   const openCard = (cardIndex: number) => {
-    return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    return () => {
       if (!acceptingInput) {
         return
       }
@@ -213,8 +215,6 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
         showModal={!started || (won && !!lastRunningTime)}
         started={started}
         onToggleGameState={toggleGameState}
-        pairsFlipped={pairsFlipped}
-        startTime={startTime}
         highScores={highScores}
         winningCondition={
           won

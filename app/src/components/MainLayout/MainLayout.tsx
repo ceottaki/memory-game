@@ -1,11 +1,8 @@
 import Head from 'next/head'
-import { register, unregister } from 'next-offline/runtime'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Container from 'react-bootstrap/Container'
 
-import Footer from './Footer'
-import Header from './Header'
 import styles from './MainLayout.module.scss'
 
 interface IMainLayoutProps {
@@ -22,17 +19,6 @@ export const MainLayout: React.FC<IMainLayoutProps> = ({
   siteTitle
 }) => {
   const { basePath } = useRouter()
-
-  useEffect(() => {
-    const isProd = process.env.NODE_ENV === 'production'
-    if (isProd) {
-      register(`${basePath}/service-worker.js`, { scope: `${basePath}/` })
-    }
-
-    return () => {
-      unregister()
-    }
-  }, [])
 
   return (
     <>

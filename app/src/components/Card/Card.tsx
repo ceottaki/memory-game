@@ -1,9 +1,8 @@
+import Image from 'next/image'
 import { useRouter } from 'next/router'
-// import Image from 'next/image'
 import React from 'react'
 
 import styles from './Card.module.scss'
-
 import { ICard } from '../../common-types/ICard'
 
 interface ICardProps {
@@ -28,7 +27,7 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
         <div className={styles.cardBack} />
         <div className={`${styles.cardFront} d-flex align-items-center justify-content-center`}>
           <div className={styles.cardFrontImageContainer}>
-            <img
+            <Image
               alt='Card'
               src={`${basePath}/images/cards/${card.matchValue}.png`}
               decoding='async'

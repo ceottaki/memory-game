@@ -1,6 +1,6 @@
 import { NextPageContext } from 'next'
 
-const Error = ({ statusCode }: { statusCode: any }) => {
+const Error = ({ statusCode }: { statusCode: number }) => {
   return (
     <p>
       {statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}

@@ -8,7 +8,7 @@ export interface IWindowSizeProps {
   }
 }
 
-const withWindowSize = <T extends {}>(
+const withWindowSize = <T extends object>(
   WrappedComponent: React.ComponentType<T & IWindowSizeProps>
 ) => {
   const NewComponent: React.FC<T> = (props: T) => {

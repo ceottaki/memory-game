@@ -1,17 +1,15 @@
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
+import { Button, Modal, Table } from 'react-bootstrap'
 
 import styles from './ScoreBoard.module.scss'
-
 import { Utils } from '../../services/utils'
 
 interface IScoreBoardProps {
   showModal: boolean
   started: boolean
-  onToggleGameState: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  pairsFlipped: number
-  startTime?: Date
+  onToggleGameState: () => void
   highScores: {
     pairsFlipped: number
     runningTime: Date
@@ -27,8 +25,6 @@ const ScoreBoard: React.FC<IScoreBoardProps> = ({
   showModal,
   started,
   onToggleGameState,
-  pairsFlipped,
-  startTime,
   highScores,
   winningCondition
 }) => {
@@ -83,10 +79,10 @@ const ScoreBoard: React.FC<IScoreBoardProps> = ({
           </Table>
         </div>
         <div className={styles.footer}>
-          Built with <img src={`${basePath}/images/love.svg`} width='24' height='24' />
+          Built with <Image src={`${basePath}/images/love.svg`} alt='love' width={24} height={24} />
           <br />
           &copy; {new Date().getUTCFullYear()}{' '}
-          <a target='_blank' href='https://github.com/ceottaki'>
+          <a target='_blank' href='https://github.com/ceottaki' rel='noreferrer'>
             Felipe Ceotto
           </a>
         </div>
