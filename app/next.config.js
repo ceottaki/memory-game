@@ -14,7 +14,12 @@ const nextConfig = {
   trailingSlash: true,
   output: 'export',
   basePath: isProd ? '/memory-game' : '',
-  assetPrefix: isProd ? '/memory-game/' : ''
+  assetPrefix: isProd ? '/memory-game/' : '',
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ['via.placeholder.com', 'ceottaki.github.io'],
+    unoptimized: true
+  }
   // generateInDevMode: true,
 }
 

@@ -3,8 +3,6 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import Container from 'react-bootstrap/Container'
 
-import Footer from './Footer'
-import Header from './Header'
 import styles from './MainLayout.module.scss'
 
 interface IMainLayoutProps {

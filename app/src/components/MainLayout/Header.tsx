@@ -1,7 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-
-import styles from './Header.module.scss'
+import { Navbar } from 'react-bootstrap'
 
 export const Header: React.FC = () => {
   return (
