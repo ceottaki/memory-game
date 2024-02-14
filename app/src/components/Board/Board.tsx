@@ -121,26 +121,28 @@ export const Board: React.FC<IBoardProps> = ({ height, width }) => {
 
   useEffect(() => {
     if (won) {
-      const newHighScores = [
-        ...highScores,
-        {
-          pairsFlipped,
-          runningTime: new Date(Number(new Date()) - Number(startTime)),
-          timestamp: new Date()
+      setState((s) => {
+        const newHighScores = [
+          ...s.highScores,
+          {
+            pairsFlipped,
+            runningTime: new Date(Number(new Date()) - Number(startTime)),
+            timestamp: new Date()
+          }
+        ]
+
+        newHighScores.sort((a, b) => Number(a.runningTime) - Number(b.runningTime))
+
+        return {
+          ...s,
+          started: false,
+          lastPairsFlipped: s.pairsFlipped,
+          lastRunningTime: new Date(Number(new Date()) - Number(s.startTime)),
+          highScores: newHighScores.slice(0, 10)
         }
-      ]
-
-      newHighScores.sort((a, b) => Number(a.runningTime) - Number(b.runningTime))
-
-      setState((s) => ({
-        ...s,
-        started: false,
-        lastPairsFlipped: s.pairsFlipped,
-        lastRunningTime: new Date(Number(new Date()) - Number(s.startTime)),
-        highScores: newHighScores.slice(0, 10)
-      }))
+      })
     }
-  }, [highScores, pairsFlipped, startTime, won])
+  }, [pairsFlipped, startTime, won])
 
   useEffect(() => {
     localStorage.setItem('highScores', JSON.stringify(highScores))

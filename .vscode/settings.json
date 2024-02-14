@@ -7,7 +7,7 @@
   "editor.tabSize": 2,
   "liveServer.settings.NoBrowser": true,
   "liveServer.settings.root": "/app/out",
-  "liveServer.settings.mount": [["/memory-game", "/app/out"]],
+  "liveServer.settings.mount": [["/memory-game", "./app/out"]],
   "prettier.arrowParens": "always",
   "prettier.endOfLine": "lf",
   "prettier.prettierPath": "./app/node_modules/prettier",
