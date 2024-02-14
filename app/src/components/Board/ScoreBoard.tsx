@@ -79,12 +79,21 @@ const ScoreBoard: React.FC<IScoreBoardProps> = ({
           </Table>
         </div>
         <div className={styles.footer}>
-          Built with <Image src={`${basePath}/images/love.svg`} alt='love' width={24} height={24} />
-          <br />
-          &copy; {new Date().getUTCFullYear()}{' '}
-          <a target='_blank' href='https://github.com/ceottaki' rel='noreferrer'>
-            Felipe Ceotto
-          </a>
+          <span>
+            Built with{' '}
+            <Image src={`${basePath}/images/love.svg`} alt='love' width={24} height={24} />
+          </span>
+          <span>
+            &copy; {new Date().getUTCFullYear()}{' '}
+            <a target='_blank' href='https://github.com/ceottaki' rel='noreferrer'>
+              Felipe Ceotto
+            </a>
+          </span>
+          {!!process.env.NEXT_PUBLIC_BUILD_NUMBER ? (
+            <span className={styles.buildNumber}>
+              Build {process.env.NEXT_PUBLIC_BUILD_NUMBER.substring(0, 7)}
+            </span>
+          ) : null}
         </div>
       </Modal.Body>
     </Modal>
