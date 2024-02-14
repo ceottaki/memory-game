@@ -33,6 +33,8 @@ export const Card: React.FC<ICardProps> = ({ card, onClick }) => {
               decoding='async'
               className={styles.cardFrontImage}
               sizes='100vw'
+              width={604}
+              height={896}
             />
           </div>
           {/* <Image layout='fill' src={`/images/cards/${card.matchValue}.png`} alt='Card' /> */}
